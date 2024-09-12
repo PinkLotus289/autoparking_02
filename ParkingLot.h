@@ -2,23 +2,20 @@
 #define PARKINGLOT_H
 
 #include <vector>
+#include <memory>
 #include <string>
-#include "Car.h"
+
+class Car;
 
 class ParkingLot {
 private:
-    std::vector<Car*> cars;  // Используем указатели для динамического выделения памяти
+    std::vector<std::unique_ptr<Car>> cars; // Используем умные указатели
 public:
-    ~ParkingLot();
-
-    // CRUD-методы
-    void addCar(Car* car);
+    // Методы
+    void addCar(std::unique_ptr<Car> car);
     void removeCar(const std::string& registrationNumber);
-    Car* findCar(const std::string& registrationNumber) const;
-    void printAllCars() const;
-
-    // Дополнительный метод: Поиск машин по модели
-    std::vector<Car*> findCarsByModel(const std::string& model) const;
+    // Другие методы
 };
 
 #endif // PARKINGLOT_H
+
