@@ -1,6 +1,6 @@
 #include "Car.h"
 
-Car::Car(const std::string& regNum, const std::string& mdl, const std::string& clr)
+Car::Car(std::string_view regNum, std::string_view mdl, std::string_view clr)
     : registrationNumber(regNum), model(mdl), color(clr) {}
 
 std::string Car::getRegistrationNumber() const {
@@ -15,14 +15,14 @@ std::string Car::getColor() const {
     return color;
 }
 
-void Car::setRegistrationNumber(const std::string& regNum) {
+void Car::setRegistrationNumber(std::string_view regNum) {
     registrationNumber = regNum;
 }
 
-void Car::setModel(const std::string& mdl) {
+void Car::setModel(std::string_view mdl) {
     model = mdl;
 }
 
-void Car::setColor(const std::string& clr) {
+void Car::setColor(std::string_view clr) {
     color = clr;
 }

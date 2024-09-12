@@ -2,6 +2,7 @@
 #define CAR_H
 
 #include <string>
+#include <string_view>
 
 class Car {
 private:
@@ -13,7 +14,7 @@ public:
     Car() = default;
 
     // Конструктор с параметрами
-    Car(const std::string& regNum, const std::string& mdl, const std::string& clr);
+    Car(std::string_view regNum, std::string_view mdl, std::string_view clr);
 
     // Деструктор по умолчанию
     ~Car() = default;
@@ -28,9 +29,9 @@ public:
     std::string getColor() const;
 
     // Методы установки
-    void setRegistrationNumber(const std::string& regNum);
-    void setModel(const std::string& mdl);
-    void setColor(const std::string& clr);
+    void setRegistrationNumber(std::string_view regNum);
+    void setModel(std::string_view mdl);
+    void setColor(std::string_view clr);
 };
 
 #endif // CAR_H
