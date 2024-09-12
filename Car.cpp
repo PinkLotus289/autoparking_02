@@ -1,7 +1,5 @@
 #include "Car.h"
 
-Car::Car() {}
-
 Car::Car(const std::string& regNum, const std::string& mdl, const std::string& clr)
     : registrationNumber(regNum), model(mdl), color(clr) {}
 
