@@ -9,12 +9,15 @@ class Car;
 
 class ParkingLot {
 private:
-    std::vector<std::unique_ptr<Car>> cars; // Используем умные указатели
+    std::vector<std::unique_ptr<Car>> cars;
 public:
-    // Методы
     void addCar(std::unique_ptr<Car> car);
     void removeCar(const std::string& registrationNumber);
-    // Другие методы
+    
+    // Добавляем отсутствующие методы
+    Car* findCar(const std::string& registrationNumber);
+    void printAllCars() const;
+    std::vector<Car*> findCarsByModel(const std::string& model) const;
 };
 
 #endif // PARKINGLOT_H
