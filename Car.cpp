@@ -1,28 +1,14 @@
-#include "Car.h"
+#include "Car.hpp"
+#include <iostream>
 
-Car::Car(std::string_view regNum, std::string_view mdl, std::string_view clr)
-    : registrationNumber(regNum), model(mdl), color(clr) {}
+Car::Car(std::string_view b, std::string_view lp, bool isReserved)
+    : brand(b), licensePlate(lp), reserved(isReserved) {}
 
-std::string Car::getRegistrationNumber() const {
-    return registrationNumber;
+std::string_view Car::getLicensePlate() const {
+    return licensePlate;
 }
 
-std::string Car::getModel() const {
-    return model;
-}
-
-std::string Car::getColor() const {
-    return color;
-}
-
-void Car::setRegistrationNumber(std::string_view regNum) {
-    registrationNumber = regNum;
-}
-
-void Car::setModel(std::string_view mdl) {
-    model = mdl;
-}
-
-void Car::setColor(std::string_view clr) {
-    color = clr;
+void Car::displayCar() const {
+    std::cout << "Марка: " << brand << ", Номерной знак: " << licensePlate
+              << (reserved ? " (Зарезервировано)" : "") << std::endl;
 }

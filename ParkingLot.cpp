@@ -1,43 +1,67 @@
-#include "ParkingLot.h"
-#include "Car.h"
-#include <algorithm>
+#include "ParkingLot.hpp"
 #include <iostream>
+#include <algorithm>
+
+ParkingLot::ParkingLot(std::string_view n) : name(n) {}
 
 void ParkingLot::addCar(std::unique_ptr<Car> car) {
     cars.push_back(std::move(car));
 }
 
-void ParkingLot::removeCar(const std::string& registrationNumber) {
-    auto it = std::remove_if(cars.begin(), cars.end(),
-        [&registrationNumber](const std::unique_ptr<Car>& car) {
-            return car->getRegistrationNumber() == registrationNumber;
-        });
-    cars.erase(it, cars.end());
+void ParkingLot::removeCar(std::string_view licensePlate) {
+    auto it = std::remove_if(cars.begin(), cars.end(), [&](const auto& car) {
+        return car->getLicensePlate() == licensePlate;
+    });
+    if (it != cars.end()) {
+        cars.erase(it, cars.end());
+        std::cout << "Машина с номерным знаком " << licensePlate << " удалена." << std::endl;
+    } else {
+        std::cout << "Машина не найдена." << std::endl;
+    }
 }
 
-Car* ParkingLot::findCar(const std::string& registrationNumber) {
+Car* ParkingLot::getCar(std::string_view licensePlate) {
     for (const auto& car : cars) {
-        if (car->getRegistrationNumber() == registrationNumber) {
+        if (car->getLicensePlate() == licensePlate) {
             return car.get();
         }
     }
-    return nullptr; // Если не найдено
+    return nullptr;
 }
 
-void ParkingLot::printAllCars() const {
-    for (const auto& car : cars) {
-        std::cout << "Registration Number: " << car->getRegistrationNumber()
-                  << ", Model: " << car->getModel()
-                  << ", Color: " << car->getColor() << std::endl;
+void ParkingLot::addParkingSpot(std::unique_ptr<ParkingSpot> spot) {
+    spots.push_back(std::move(spot));
+}
+
+void ParkingLot::removeParkingSpot(int spotNumber) {
+    auto it = std::remove_if(spots.begin(), spots.end(), [&](const auto& spot) {
+        return spot->getNumber() == spotNumber;
+    });
+    if (it != spots.end()) {
+        spots.erase(it, spots.end());
+        std::cout << "Парковочное место " << spotNumber << " удалено." << std::endl;
+    } else {
+        std::cout << "Парковочное место не найдено." << std::endl;
     }
 }
 
-std::vector<Car*> ParkingLot::findCarsByModel(const std::string& model) const {
-    std::vector<Car*> result;
-    for (const auto& car : cars) {
-        if (car->getModel() == model) {
-            result.push_back(car.get());
+ParkingSpot* ParkingLot::getParkingSpot(int spotNumber) {
+    for (const auto& spot : spots) {
+        if (spot->getNumber() == spotNumber) {
+            return spot.get();
         }
     }
-    return result;
+    return nullptr;
+}
+
+void ParkingLot::displayParkingLot(bool isAdmin) const {
+    std::cout << "Парковка: " << name << std::endl;
+    std::cout << "Машины:" << std::endl;
+    for (const auto& car : cars) {
+        car->displayCar();
+    }
+    std::cout << "Парковочные места:" << std::endl;
+    for (const auto& spot : spots) {
+        spot->displayParkingSpot(isAdmin);
+    }
 }
