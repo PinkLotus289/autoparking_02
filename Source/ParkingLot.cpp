@@ -1,6 +1,7 @@
 #include "../Header/ParkingLot.hpp"
 #include <iostream>
 #include <algorithm>
+#include <iomanip>
 
 ParkingLot::ParkingLot(std::string_view n) : name(n) {}
 
@@ -56,11 +57,32 @@ ParkingSpot* ParkingLot::getParkingSpot(int spotNumber) {
 
 void ParkingLot::displayParkingLot(bool isAdmin) const {
     std::cout << "Парковка: " << name << std::endl;
-    std::cout << "Машины:" << std::endl;
+    
+    // Вывод таблицы для машин
+    std::cout << "Машины на парковке:" << std::endl;
+    std::cout << std::left 
+              << std::setw(25) << "Марка"
+              << std::setw(29) << "Номерной знак" 
+              << std::setw(30) << "Статус" 
+              << std::endl;
+    std::cout << std::string(90, '-') << std::endl;
+
     for (const auto& car : cars) {
         car->displayCar();
     }
-    std::cout << "Парковочные места:" << std::endl;
+
+    // Вывод таблицы для парковочных мест
+    std::cout << "\nПарковочные места:" << std::endl;
+    std::cout << std::left 
+              << std::setw(25) << "Номер"
+              << std::setw(24) << "Размер"
+              << std::setw(25) << "Занятость";
+    if (isAdmin) {
+        std::cout << std::setw(25) << "Информация"; // Добавлен пробел перед текстом
+    }
+    std::cout << std::endl;
+    std::cout << std::string(90, '-') << std::endl;
+
     for (const auto& spot : spots) {
         spot->displayParkingSpot(isAdmin);
     }

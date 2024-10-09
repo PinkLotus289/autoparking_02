@@ -11,6 +11,7 @@ void displayMenu() {
     cout << "3. Удалить машину" << endl;
     cout << "4. Удалить парковочное место" << endl;
     cout << "5. Выход" << endl;
+    cout << "6. Внести информацию о парковочном месте" << endl;
     cout << "Введите ваш выбор: ";
 }
 
@@ -63,6 +64,27 @@ int main() {
             case 5:
                 running = false;
                 break;
+            case 6: { // Новый пункт меню для добавления парковочного места
+                cout << "\nВведите номер парковочного места: ";
+                int number;
+                cin >> number;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                cout << "Введите размер парковочного места (например, Компактное, Большое): ";
+                string size;
+                getline(cin, size);
+
+                cout << "Занято ли место? (1 - Да, 0 - Нет): ";
+                bool occupied;
+                cin >> occupied;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                auto newSpot = std::make_unique<ParkingSpot>(number, size, occupied);
+                parkingLot->addParkingSpot(std::move(newSpot));
+
+                cout << "Парковочное место добавлено!" << endl;
+                break;
+            }
             default:
                 cout << "Неверный выбор, попробуйте снова." << endl;
                 break;
